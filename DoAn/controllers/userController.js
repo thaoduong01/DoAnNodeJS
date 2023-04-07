@@ -4,8 +4,13 @@ const userModel = require('../models/user');
 
 const app = express();
 
+const jwt = require('jsonwebtoken');
+// const bcrypt = require("bcrypt")
+const bcryptjs = require("bcryptjs")
+const cookieParser = require("cookie-parser")
+
 app.get('/', (req, res) => {
-    res.render("adduser");
+    res.render("user/login");
 });
 
 async function hashedPass(password) {
@@ -19,17 +24,6 @@ async function compare(userPass, hashedPass) {
 }
 
 
-
-// app.get("/", (req, res) => {
-//     // if(req.cookies.jwt){
-//     //     const verify = jwt.verify(req.cookies.jwt,"xinchaohomnaylamotngayratdepvatuoixanhngat")
-//     //     res.render("home", {username:verify.username})
-//     // }
-//     // else{
-//     res.render("login")
-//     // }
-// })
-
 app.post("/login", async (req, res) => {
     try {
         const check = await userModel.findOne({ username: req.body.username })
@@ -38,10 +32,6 @@ app.post("/login", async (req, res) => {
 
 
         if (check && passCheck) {
-            // res.cookie("jwt", check.token,{
-            //     maxAge:600000,
-            //     httpOnly:true
-            // })
             res.render("home", { username: req.body.username })
         }
         else {
@@ -54,9 +44,9 @@ app.post("/login", async (req, res) => {
 
 })
 
-app.get("/signup", (req, res) => {
-    res.render("user/signup.hbs")
-})
+// app.get("/signup", (req, res) => {
+//     res.render("user/signup.hbs")
+// })
 
 app.post("/signup", async (req, res) => {
     try {
@@ -67,12 +57,6 @@ app.post("/signup", async (req, res) => {
         }
         else {
             const token = jwt.sign({ username: req.body.username }, "xinchaohomnaylamotngayratdepvatuoixanhngat")
-
-            // res.cookie("jwt", token,{
-            //     maxAge:600000,
-            //     httpOnly:true
-            // })
-
 
             const data = {
                 id: Date.now().toString(),
@@ -85,17 +69,23 @@ app.post("/signup", async (req, res) => {
             await userModel.insertMany([data])
             console.log(data);
 
-            // res.render("home", {username:req.body.username})
 
-            res.render("/user/login.hbs")
+            res.render("user/login")
         }
 
-    } catch {
-        res.send("wrong details")
-        // res.render("signup")
+    } catch (error) {
+        console.log(error);
+        res.send("An error occurred");
     }
 
 })
 
+app.get('/logout', (req, res) => {
+    res.render("user/login");
+});
+
+app.get('/home', (req, res) => {
+    res.render("home");
+});
 
 module.exports = app;

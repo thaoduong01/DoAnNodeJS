@@ -30,7 +30,7 @@ app.use(bodyparser.json());
 
 // app.engine('hbs', hbs);
 
-app.set('view engine', 'hbs')
+app.set('view engine', '.hbs')
 app.set("views", templatePath)
 app.use(express.json());
 

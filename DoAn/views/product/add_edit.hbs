@@ -1,0 +1,55 @@
+<h1>{{title}}</h1>
+<form id="add-product-form" method="post" action="/product/add">
+    <input type="hidden" name="id" value="{{product._id}}" />
+    <label for="name">Product Name:</label>
+    <input type="text" id="productname" name="productname" value="{{product.productname}}" required>
+    <span class="error" id="name-error"></span>
+    <label for="category">Detail:</label>
+    <textarea id="detail" name="detail" required>{{product.detail}}</textarea>
+    <span class="error" id="category-error"></span>
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price" value="{{product.price}}" required>
+    <label for="price">Img:</label>
+    <input type="file" id="img" name="img" value="{{product.img}}" required>
+    <img src>
+    <span class="error" id="price-error"></span>
+    <input type="submit" value="Submit">
+    <a href="/product/list" class="btn btn-info">List</a>
+</form>
+
+
+<style>
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    select {
+        padding: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #3e8e41;
+    }
+
+    .error {
+        color: red;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+</style>

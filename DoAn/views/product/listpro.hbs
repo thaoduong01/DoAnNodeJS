@@ -1,0 +1,90 @@
+<h3>{{title}}</h3>
+<a href="/product/" class="btn btn-default btn-sm">Add product</a>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Product Name</th>
+            <th scope="col">Product Price</th>
+            <th scope="col">Product Detail</th>
+            <th scope="col">Product Img</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each products}}
+        <tr>
+            <td>{{this.productname}}</td>
+            <td>{{this.price}}</td>
+            <td>{{this.detail}}</td>
+            <td><img src="{{this.img}}" alt="{{this.productname}}" style="width:50px;height:50px;"></td>
+            <td>
+                <a href="/product/edit/{{this._id}}" class="btn btn-primary">
+                    <i class="fas fa-edit">Edit</i>
+                </a>
+                <a href="/product/delete/{{this._id}}" onclick="return confirm('Are you sure?')" class="btn btn-danger">
+                    <i class="fas fa-trash">Delete</i>
+                </a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<a href="/user/home" class="btn btn-default btn-sm">HOME</a>
+
+<!-- Add Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-2LFjaHJz7R00XWtBXz7VbEPK06yUnsfRgOjfeAlY7mEVB0oZ5x5qXzgUK1dMXM5dx5j1ZXUN2/gWU6P0o6Nbg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- Add custom CSS -->
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #2C3E50;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-bottom: 3px solid #ddd;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #ddd;
+    }
+
+    .btn {
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+        margin-right: 10px;
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        color: white;
+    }
+
+    .fas {
+        margin-right: 5px;
+    }
+</style>

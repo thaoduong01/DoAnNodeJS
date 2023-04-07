@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>Login Form</title>
+<title>Signup Form</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -39,11 +39,23 @@
 
 <body>
     <div class="login-form">
-        <form name="frmUser" method="post" action="/login" align="center">
-            <h2 class="text-center">Log In</h2>
+        <form name="frmUser" method="post" action="/user/signup" align="center">
+            <h2 class="text-center">Sign Up</h2>
             <div class="message text-danger"></div>
             <div class="form-group">
                 <input type="text" class="form-control" name="username" placeholder="Username" required="required"
+                    autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="fullname" placeholder="Fullname" required="required"
+                    autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Email" name="emal" required="required"
+                    autocomplete="off">
+            </div>
+            <div class="form-group">
+                <input type="number" class="form-control" name="phno" placeholder="Phone number" required="required"
                     autocomplete="off">
             </div>
             <div class="form-group">
@@ -51,11 +63,11 @@
                     required="required">
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block" value="Submit">Log in</button>
+                <button type="submit" class="btn btn-primary btn-block" value="Submit">Sign Up</button>
             </div>
         </form>
+        <a href="/user/">Login</a>
 
-        <a href="/signup">Make a new account</a>
     </div>
 </body>
 

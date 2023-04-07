@@ -1,31 +1,12 @@
-const express = require("express")
+const express = require('express');
 
-const app = express()
-const path = require("path")
-const hbs = require("hbs")
-const collection = require("./mongodb")
+const userModel = require('../models/user');
 
-// const bcrypt = require("bcrypt")
-const bcryptjs = require("bcryptjs")
-const jwt = require("jsonwebtoken")
-const cookieParser = require("cookie-parser")
+const app = express();
 
-
-const templatePath = path.join(__dirname, "../templates")
-const publicPath = path.join(__dirname, "../public")
-
-
-app.use(express.json())
-app.use(cookieParser())
-
-app.set('view engine', 'hbs')
-app.set("views", templatePath)
-
-app.use(express.urlencoded({ extended: false }));
-
-app.set(express.static(publicPath))
-
-
+app.get('/', (req, res) => {
+    res.render("adduser");
+});
 
 async function hashedPass(password) {
     const res = await bcryptjs.hash(password, 10)
@@ -39,19 +20,19 @@ async function compare(userPass, hashedPass) {
 
 
 
-app.get("/", (req, res) => {
-    // if(req.cookies.jwt){
-    //     const verify = jwt.verify(req.cookies.jwt,"xinchaohomnaylamotngayratdepvatuoixanhngat")
-    //     res.render("home", {username:verify.username})
-    // }
-    // else{
-    res.render("login")
-    // }
-})
+// app.get("/", (req, res) => {
+//     // if(req.cookies.jwt){
+//     //     const verify = jwt.verify(req.cookies.jwt,"xinchaohomnaylamotngayratdepvatuoixanhngat")
+//     //     res.render("home", {username:verify.username})
+//     // }
+//     // else{
+//     res.render("login")
+//     // }
+// })
 
 app.post("/login", async (req, res) => {
     try {
-        const check = await collection.findOne({ username: req.body.username })
+        const check = await userModel.findOne({ username: req.body.username })
 
         const passCheck = await compare(req.body.password, check.password)
 
@@ -74,12 +55,12 @@ app.post("/login", async (req, res) => {
 })
 
 app.get("/signup", (req, res) => {
-    res.render("signup")
+    res.render("user/signup.hbs")
 })
 
 app.post("/signup", async (req, res) => {
     try {
-        const check = await collection.findOne({ username: req.body.username })
+        const check = await userModel.findOne({ username: req.body.username })
 
         if (check) {
             res.send("User already exist")
@@ -101,12 +82,12 @@ app.post("/signup", async (req, res) => {
                 password: await hashedPass(req.body.password),
                 token: token
             }
-            await collection.insertMany([data])
+            await userModel.insertMany([data])
             console.log(data);
 
             // res.render("home", {username:req.body.username})
 
-            res.render("login")
+            res.render("/user/login.hbs")
         }
 
     } catch {
@@ -117,18 +98,4 @@ app.post("/signup", async (req, res) => {
 })
 
 
-app.post("/listpro", async (req, res) => {
-    ProductModel.find({
-    })
-        .then(data => {
-            console.log('du lieu', data);
-        })
-        .catch(err => {
-            console.log('err', err);
-        })
-})
-
-
-app.listen(3000, () => {
-    console.log("port connected");
-})
+module.exports = app;

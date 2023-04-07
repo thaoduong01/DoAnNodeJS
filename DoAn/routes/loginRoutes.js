@@ -1,9 +1,8 @@
-const express = require("express")
+const express = require('express');
 
-const app = express()
-const path = require("path")
-const hbs = require("hbs")
-const collection = require("./mongodb")
+const UserModel = require('../models/user');
+
+const app = express();
 
 // const bcrypt = require("bcrypt")
 const bcryptjs = require("bcryptjs")
@@ -11,20 +10,17 @@ const jwt = require("jsonwebtoken")
 const cookieParser = require("cookie-parser")
 
 
-const templatePath = path.join(__dirname, "../templates")
-const publicPath = path.join(__dirname, "../public")
+// const templatePath = path.join(__dirname, "../templates")
+// const publicPath = path.join(__dirname, "../public")
 
+// app.use(cookieParser())
 
-app.use(express.json())
-app.use(cookieParser())
+// app.set('view engine', 'hbs')
+// app.set("views", templatePath)
 
-app.set('view engine', 'hbs')
-app.set("views", templatePath)
+// app.use(express.urlencoded({ extended: false }));
 
-app.use(express.urlencoded({ extended: false }));
-
-app.set(express.static(publicPath))
-
+// app.set(express.static(publicPath))
 
 
 async function hashedPass(password) {
@@ -114,21 +110,4 @@ app.post("/signup", async (req, res) => {
         // res.render("signup")
     }
 
-})
-
-
-app.post("/listpro", async (req, res) => {
-    ProductModel.find({
-    })
-        .then(data => {
-            console.log('du lieu', data);
-        })
-        .catch(err => {
-            console.log('err', err);
-        })
-})
-
-
-app.listen(3000, () => {
-    console.log("port connected");
 })
